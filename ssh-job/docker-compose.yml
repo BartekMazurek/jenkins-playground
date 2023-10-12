@@ -1,0 +1,22 @@
+version: '3'
+services:
+    jenkins:
+        image: jenkins/jenkins:lts
+        ports:
+            - "8080:8080"
+            - "50000:50000"
+        container_name: jenkins
+        volumes:
+            - ./jenkins:/var/jenkins_home
+            - ./keys:/var/jenkins_home/keys
+        networks:
+            - ssh-test
+    remote_job_host:
+        container_name: remote_job_host
+        build:
+            context: .
+            dockerfile: ./docker/ubuntu/Dockerfile
+        networks:
+            - ssh-test
+networks:
+    ssh-test:
