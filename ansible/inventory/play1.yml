@@ -1,0 +1,6 @@
+---
+- name: Test playbook
+  hosts: server1
+  tasks:
+      - name: Test shell command
+        shell: echo "Hello World" > /tmp/ansible-result
