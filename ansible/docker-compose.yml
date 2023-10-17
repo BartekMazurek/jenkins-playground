@@ -1,0 +1,25 @@
+version: '3'
+services:
+    jenkins:
+        container_name: jenkins
+        build:
+            context: .
+            dockerfile: ./docker/jenkins/Dockerfile
+        ports:
+            - "8080:8080"
+            - "50000:50000"
+        volumes:
+            - ./jenkins:/var/jenkins_home
+            - ./keys:/var/jenkins_home/keys
+            - ./inventory:/var/jenkins_home/inventory
+        networks:
+            - ansible-test
+    remote_job_host:
+        container_name: remote_job_host
+        build:
+            context: .
+            dockerfile: ./docker/ubuntu/Dockerfile
+        networks:
+            - ansible-test
+networks:
+    ansible-test:
